@@ -11,7 +11,7 @@ WORKDIR /app/frontend
 COPY frontend/ ./
 
 # Install dependencies (respects .npmrc for custom registries if present)
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 # Remove ALL local environment files to prevent localhost config from being used
 RUN rm -f .env.local .env.development .env

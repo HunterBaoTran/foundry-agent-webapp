@@ -5,6 +5,82 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  --sidebar-width: 248px;
+  background: #f7f7f9;
+}
+
+.layout {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background: #101018;
+  color: #f6f6fb;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 18px;
+  gap: 24px;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sidebarHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebarTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.sidebarSubtitle {
+  font-size: 0.8rem;
+  color: rgba(246, 246, 251, 0.7);
+}
+
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.navButton {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid transparent;
+  color: inherit;
+  text-align: left;
+  border-radius: 14px;
+  padding: 14px 14px 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.navButton:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.navButtonActive {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.navLabel {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.navMeta {
+  font-size: 0.78rem;
+  color: rgba(246, 246, 251, 0.7);
 }
 
 .mainContent {
@@ -13,16 +89,55 @@
   width: 100%;
   position: relative;
   overflow: hidden;
+  background: #f7f7f9;
+}
+
+.page {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
 }
 
 .builtWithBadge {
   position: absolute;
   bottom: 24px;
-  left: 24px;
+  left: calc(var(--sidebar-width) + 24px);
   z-index: 10;
 
   /* Hide on mobile screens */
   @media (width <= 768px) {
     display: none;
+  }
+}
+
+@media (width <= 900px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .sidebarHeader {
+    min-width: 0;
+  }
+
+  .navGroup {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .navButton {
+    min-width: 150px;
+  }
+
+  .builtWithBadge {
+    left: 24px;
   }
 }

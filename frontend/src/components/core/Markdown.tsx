@@ -3,7 +3,9 @@ import type { Components, ExtraProps } from 'react-markdown';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
+import remarkMath from 'remark-math';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
+import rehypeKatex from 'rehype-katex';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import copy from 'copy-to-clipboard';
@@ -11,6 +13,7 @@ import { Button } from '@fluentui/react-components';
 import { CopyRegular } from '@fluentui/react-icons';
 import { memo } from 'react';
 import styles from './Markdown.module.css';
+import 'katex/dist/katex.min.css';
 
 interface MarkdownProps {
   content: string;
@@ -150,16 +153,55 @@ export function Markdown({ content }: MarkdownProps) {
   return (
     <div className={styles.markdown}>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm, remarkBreaks]}
+        remarkPlugins={[remarkGfm, remarkBreaks, remarkMath]}
         rehypePlugins={[
+          rehypeKatex,
           [
             rehypeSanitize,
             {
               ...defaultSchema,
-              tagNames: [...(defaultSchema.tagNames ?? []), 'sub', 'sup'],
+              tagNames: [
+                ...(defaultSchema.tagNames ?? []),
+                'sub',
+                'sup',
+                'div',
+                'span',
+                'math',
+                'semantics',
+                'mrow',
+                'mi',
+                'mo',
+                'mn',
+                'msup',
+                'msub',
+                'mfrac',
+                'msqrt',
+                'mroot',
+                'mtext',
+                'mspace',
+                'mtable',
+                'mtr',
+                'mtd',
+                'mstyle',
+                'mpadded',
+                'menclose',
+                'mover',
+                'munder',
+                'munderover',
+                'msubsup',
+                'mphantom',
+                'merror',
+                'annotation',
+                'annotation-xml',
+              ],
               attributes: {
                 ...defaultSchema.attributes,
                 code: [['className', /^language-./]],
+                span: ['className', 'style'],
+                div: ['className', 'style'],
+                math: ['display', 'xmlns'],
+                annotation: ['encoding'],
+                'annotation-xml': ['encoding'],
               },
             },
           ],
